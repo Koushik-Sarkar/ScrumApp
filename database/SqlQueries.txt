@@ -1,0 +1,52 @@
+create table user_tbl(
+	user_id int not null auto_increment,
+	user_name varchar(100) not null,
+	user_title varchar(100) not null,
+	user_status boolean not null default 0,
+	user_email varchar(100) not null,
+	primary key (user_id)
+);	
+
+insert into user_tbl(user_name,user_title,user_status,user_email) values ("Koushik", "Sarkar", 1,"koushik.sarkar@in.pwc.com");
+insert into user_tbl(user_name,user_title,user_status,user_email) values ("G Krishna", "Rao", 1,"krishna.rao@in.pwc.com");
+insert into user_tbl(user_name,user_title,user_status,user_email) values ("Piyal", "Das", 1,"piyal.das@in.pwc.com");
+insert into user_tbl(user_name,user_title,user_status,user_email) values ("Anindya", "Mukherjee", 1,"anindya.mukherjee@in.pwc.com");
+
+create table scrum_detail_tbl(
+	scrum_id int not null auto_increment,
+	scrum_date date not null,
+	primary key (scrum_id)
+);
+
+insert into scrum_detail_tbl(scrum_date) values ('2017-03-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-04-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-05-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-06-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-07-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-10-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-11-04');
+insert into scrum_detail_tbl(scrum_date) values ('2017-12-04');
+
+create table user_scrum_map_tbl(
+	user_scrum_map int not null auto_increment,
+	scrum_id int,
+	user_id int,
+	primary key(user_scrum_map)
+);
+
+insert into user_scrum_map_tbl(scrum_id,user_id) values (1,1);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (1,2);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (1,3);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (1,4);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (2,1);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (2,2);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (2,3);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (2,4);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (3,1);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (3,2);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (3,4);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (4,3);
+insert into user_scrum_map_tbl(scrum_id,user_id) values (4,4);
+
+
+create view ScrumWiseAnalysis as select count(1) as attendedCount, b.scrum_date from user_scrum_map_tbl a,scrum_detail_tbl b where a.scrum_id=b.scrum_id group by b.scrum_date;
